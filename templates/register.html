@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <title>Register</title>
+{% endblock %}
+
+{% block body %}
+<div class="row d-flex justify-content-center align-items-center h-100 my-0 my-sm-2">
+    <div class="col-12 col-md-9 col-lg-7 col-xl-7">
+      <div class="card" style="border-radius: 15px;">
+        <div class="card-body p-5">
+          <h2 class="text-uppercase text-center mb-4">Create an account</h2>
+
+            <form action="{% url 'register' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-outline mb-3">
+                <div class="" >
+                    <span>{{ form.username.errors }}</span>
+                </div>
+                {{ form.username }}
+                <label class="form-label" for="id_{{form.username.name}}" style="margin-left: 0px;">UserName</label>
+            </div>
+            <div class="form-outline mb-3">
+                <div class="">
+                    <span>{{ form.email.errors }}</span>
+                </div>
+                {{ form.email }}
+                <label class="form-label" for="id_{{form.email.name}}" style="margin-left: 0px;">Email</label>
+           </div>
+           
+            <div class="form-outline mb-3">
+                <div class="">
+                    <span>{{ form.password1.errors}}</span>
+                </div>
+                {{ form.password1 }}
+                <label class="form-label" for="id_{{form.password1.name}}" style="margin-left: 0px;">Password</label>
+           </div>
+  
+            <div class="form-outline mb-3">
+                <div class="">
+                    <span>{{ form.password2.errors }}</span>
+                </div>
+                {{ form.password2 }}
+                <label class="form-label" for="id_{{form.password2.name}}" style="margin-left: 0px;">Repeat your password</label>
+            </div>
+
+            <div class="form-outline mb-3">
+                <div class="">
+                    <span>{{ profile_form.user_img.errors }}</span>
+                </div>
+                {{ profile_form.user_img }}
+                <label class="form-label" for="id_{{profile_form.user_img.name}}" style="margin-left: 0px;">Upload image</label>
+            </div>
+
+            <div class="d-flex justify-content-center">
+              <button type="submit" class="btn submit-btn btn-block btn-lg gradient-custom-4 text-white">Register</button>
+            </div>
+
+            <p class="text-center text-muted mt-4 mb-0">Have already an account? <a href="{{% url 'login' %}" class="fw-bold text-body votes"><u>Login here</u></a></p>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% if form.is_multipart %}
+        <form action="{% url 'register' %}" method="post" enctype="multipart/form-data">
+    {% else %}
+        <form action="{% url 'register' %}" method="post">   
+    {% endif %}
+        {% csrf_token %}
+        
+        {% for field in form %}
+        <div class="fieldWrapper">
+            {{ field.errors }}
+            {{ field.label_tag }}
+            {{ field }}
+        </div>
+        {% endfor %}
+        <input type="submit">
+
+    </form>

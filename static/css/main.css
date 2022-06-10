@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap');
+
+html{
+    font-family: 'Rubik', sans-serif !important;
+}
+
+.attribution { font-size: 11px; text-align: center; }
+.attribution a { color: hsl(228, 45%, 44%); }
+
+.mx-3p{
+    margin-right: 3%;
+    margin-left: 3%;
+}
+
+.reply, .edit, .reply-focus{
+    color:  #5357B6;
+}
+
+.you-icon, .submit-btn, .bg-main-color{
+    background-color: #5357B6;
+}
+
+.edit:hover, .reply:hover{
+    color: hsl(211, 10%, 45%);
+}
+
+.delete{
+    color: hsl(358, 79%, 66%);
+}
+
+.delete:hover{
+    color: hsl(357, 100%, 86%);
+}
+
+.delete-btn{
+    background-color: hsl(358, 79%, 66%);
+}
+
+.delete-btn:focus{
+    box-shadow: 0 0 0 0.25rem hsl(357, 100%, 86%);
+}
+
+div, span{
+    font-family: 'Rubik', sans-serif !important;
+}
+
+.post,.comment{
+    font-size: 16px;
+}
+
+.votes span:nth-child(2){
+    color: hsl(238, 40%, 52%);
+}
+
+.votes span{
+    color: #C5C6EF ;
+}
+
+.votes span:hover{
+    color: hsl(238, 40%, 52%) !important;
+}
+
+.reply-card-container{
+    padding-left: 2% !important;
+    margin-left: 10% !important;
+}
+
+.active-icon{
+    background-color: #53b6b0;
+    border-color: #53b6b0;
+    left: 70%;
+    top: 100%;
+}
+
+.rounded-top{
+    --radius: 30px;
+    border-top-left-radius: var(--radius) !important;
+    border-top-right-radius: var(--radius) !important;
+}
+
+.rounded-bottom{
+    --radius: 20px;
+    border-bottom-left-radius: var(--radius) !important;
+    border-bottom-right-radius: var(--radius) !important;
+}
+
+form.add-comment{
+    display: grid;
+    grid-template-columns: 10% 75% 15%;
+    grid-template-rows: 75% 25%;
+    grid-template-areas: 
+    "photo textarea submitbtn"
+    ;
+}
+
+form.add-comment .photo-div{
+    grid-area: photo;
+}
+form.add-comment .textarea-div{
+    grid-area: textarea;
+}
+form.add-comment .submitbtn-div{
+    grid-area: submitbtn;
+}
+
+.errorlist{
+    margin-bottom: 0px !important;
+}
+
+.errorlist li::marker{
+    display: none !important;
+    opacity: 0;
+}
+
+@media (max-width:906px) {
+    .w-sm-100{
+        width: 65% !important;
+    }
+
+}
+
+@media (max-width:576px) {
+    .votes-container{
+        justify-content: space-between !important;
+    }
+    form.add-comment{
+        grid-template-areas: 
+        "textarea textarea textarea"
+        "photo . submitbtn"
+        ;
+    }
+    .rounded-top{
+        border-radius: 0px !important;
+    }
+    .container-inner{
+        border-width: 0px !important;
+    }
+    .w-sm-100{
+        width: 100% !important;
+    }
+}

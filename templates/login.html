@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <title>Login</title>
+{% endblock %}
+
+{% block body %}
+{% if form.errors %}
+<div class="alert alert-danger">
+  {{ form.errors }}
+</div>
+{% endif %}
+
+<section class="w-100 vh-100 p-4 d-flex justify-content-center align-items-center pb-4">
+        <form style="width: 22rem;" action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+          <!-- Email input -->
+          <div class="form-outline mb-4">
+            <div class="mb-0">
+              {{ form.email.errors }}  
+            </div>
+            {{ form.email }}
+              <label for="id_{{ form.email.name }}" class="form-label" style="margin-left: 0px;">{{form.email.name.capitalize}}</label>
+          </div>
+  
+          <!-- Password input -->
+          <div class="form-outline mb-4">
+            <div class="mb-0">
+              {{form.password.errors}}
+            </div>
+            {{ form.password }}
+            <label for="id_{{ form.password.name }}" class="form-label" style="margin-left: 0px;">{{form.password.name.capitalize}}</label>
+          </div>
+
+          <!-- 2 column grid layout for inline styling -->
+          <div class="row mb-4">
+            <div class="col d-flex justify-content-center">
+              <!-- Checkbox -->
+              <div class="form-check">
+                {{ form.remember_me }}
+                <label class="form-check-label" for="id_{{form.remember_me.name}}"> Remember me </label>
+              </div>
+            </div>
+  
+            <div class="col">
+              <!-- Simple link -->
+              <a href="{% url 'password_reset' %}" class="edit">Forgot password?</a>
+            </div>
+          </div>
+  
+          <!-- Submit button -->
+          <div class="w-100"><button type="submit" class="btn submit-btn text-light btn-block mb-4 w-100">Sign in</button></div>
+  
+          <!-- Register buttons -->
+          <div class="text-center">
+            <p class="edit">Not a member? <a href="{% url 'register' %}">Register</a></p>
+          </div>
+        </form>
+      </section>
+
+{% endblock %}
+
+
+<form action="{% url 'login' %}" method="post">
+    {% csrf_token %}
+    
+    {% for field in form %}
+    <div class="fieldWrapper">
+        {{ field.errors }}
+        {{ field.label_tag }}
+        {{ field }}
+    </div>
+{% endfor %}
+    <input type="submit" value="Submit">
+</form>
+<p><a href="{% url 'password_reset' %}">Forgot password?</a></p>
+<p><a href="{% url 'register' %}">Dont have account?</a></p>
