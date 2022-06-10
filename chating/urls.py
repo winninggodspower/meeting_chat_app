@@ -3,6 +3,6 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('edit_post/<int:message_id>', views.index, name='index')
+    path('chat', views.index, name='index'),
+    path('edit_message/<int:message_id>', views.edit_message.as_view(), name='edit_message')
 ]
