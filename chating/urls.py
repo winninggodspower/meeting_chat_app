@@ -4,5 +4,5 @@ from . import views
 
 urlpatterns = [
     path('chat', views.index, name='index'),
-    path('edit_message/<int:message_id>', views.edit_message, name='edit_message')
+    path('edit_message/<int:message_id>', views.edit_message.as_view(), name='edit_message')
 ]
