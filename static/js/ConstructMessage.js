@@ -27,7 +27,7 @@ function constructMessage(currentUser, message){
                 class="bi" width="12" height="14">
                 <use xlink:href='#delete'></use>
               </svg> delete</span>
-            <a href="/edit_post-${message.message_id}" class="edit me-2 cursor-pointer text-decoration-none d-${user_display}" role="button"><svg class="bi" width="14" height="14">
+            <a href="/edit_message/${message.message_id}" class="edit me-2 cursor-pointer text-decoration-none d-${user_display}" role="button"><svg class="bi" width="14" height="14">
                 <use xlink:href='#edit'></use>
               </svg> edit</span>
           </div>
@@ -92,7 +92,7 @@ function constructMessage(currentUser, message){
                   role="button"><svg class="bi" width="12" height="14">
                     <use xlink:href='#delete'></use>
                   </svg> delete</span>
-              <a href="/edit_post-${message.message_id}" class="edit me-2 cursor-pointer text-decoration-none d-${user_display}" role="button"><svg class="bi" width="14" height="14">
+              <a href="/edit_message/${message.message_id}" class="edit me-2 cursor-pointer text-decoration-none d-${user_display}" role="button"><svg class="bi" width="14" height="14">
                     <use xlink:href='#edit'></use>
                   </svg> edit</a>
             </div>
@@ -129,7 +129,7 @@ function constructMessage(currentUser, message){
                 class="bi" width="12" height="14">
                 <use xlink:href='#delete'></use>
               </svg> delete</span>
-            <a href="/edit_post-${message.message_id}" class="edit me-2 cursor-pointer text-decoration-none d-${user_display}" role="button"><svg class="bi" width="14" height="14">
+            <a href="/edit_message/${message.message_id}" class="edit me-2 cursor-pointer text-decoration-none d-${user_display}" role="button"><svg class="bi" width="14" height="14">
                 <use xlink:href='#edit'></use>
               </svg> edit</a>
           </div>
@@ -151,7 +151,7 @@ function constructMessage(currentUser, message){
                 role="button"><svg class="bi" width="12" height="14">
                   <use xlink:href='#delete'></use>
                 </svg> delete</span>
-              <a href="/edit_post-${message.message_id}" class="edit me-2 cursor-pointer text-decoration-none d-${user_display}" role="button"><svg class="bi" width="14" height="14">
+              <a href="/edit_message/${message.message_id}" class="edit me-2 cursor-pointer text-decoration-none d-${user_display}" role="button"><svg class="bi" width="14" height="14">
                   <use xlink:href='#edit'></use>
                 </svg> edit</a>
             </div>
