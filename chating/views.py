@@ -35,4 +35,3 @@ class edit_message(View):
         messages.success(request, "successfully edited post")
         return redirect('index')
 
-

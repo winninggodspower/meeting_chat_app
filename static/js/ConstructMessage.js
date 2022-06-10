@@ -6,7 +6,7 @@ function constructMessage(currentUser, message){
     if(!reply){
        
         return `
-        <div class="card-container p-3 row rounded rounded-3 mx-3p mb-3" style="background-color: hsl(0, 0%, 100%);">
+        <div class="card-container container-${message.message_id} p-3 row rounded rounded-3 mx-3p mb-3" style="background-color: hsl(0, 0%, 100%);">
         <div
           class="votes-container col-12 col-sm-2 order-1 order-sm-0 mt-2 mt-sm-0 d-flex justify-content-center align-items-start">
           <div class="votes d-flex flex-sm-column justify-content-between p-2 p-sm-3 my-2 rounded rounded-3"
@@ -29,7 +29,7 @@ function constructMessage(currentUser, message){
               </svg> delete</span>
             <a href="/edit_message/${message.message_id}" class="edit me-2 cursor-pointer text-decoration-none d-${user_display}" role="button"><svg class="bi" width="14" height="14">
                 <use xlink:href='#edit'></use>
-              </svg> edit</span>
+              </svg> edit</a>
           </div>
 
           <!-- Delete Modal -->
@@ -46,7 +46,7 @@ function constructMessage(currentUser, message){
                 </div>
                 <div class="modal-footer border-0 pt-0 justify-content-between">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO, CANCEL</button>
-                  <a href="#" type="button" class="btn delete-btn text-white">YES, DELETE</a>
+                  <a id="${message.message_id}" type="button" data-bs-dismiss="modal" class="btn delete-btn text-white">YES, DELETE</a>
                 </div>
               </div>
             </div>
@@ -107,7 +107,7 @@ function constructMessage(currentUser, message){
 
     }else{
       return `
-      <div class="reply-card-container border-start border-3 me-1">
+      <div class="reply-card-container container-${message.message_id} border-start border-3 me-1">
         <div class="card-container p-3 row rounded rounded-3 mx-3p mb-3" style="background-color: hsl(0, 0%, 100%);">
           <div
             class="votes-container col-12 col-sm-2 order-1 order-sm-0 mt-2 mt-sm-0 d-flex justify-content-center align-items-start">
@@ -199,7 +199,7 @@ function constructMessage(currentUser, message){
               </div>
               <div class="modal-footer border-0 pt-0 justify-content-between">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO, CANCEL</button>
-                <a href="#" type="button" class="btn delete-btn text-white">YES, DELETE</a>
+                <a id="${message.message_id}" type="button" data-bs-dismiss="modal" class="btn delete-btn text-white">YES, DELETE</a>
               </div>
             </div>
           </div>

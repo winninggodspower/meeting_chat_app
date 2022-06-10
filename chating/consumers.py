@@ -1,6 +1,8 @@
 # chat/consumers.py
-from email import message
+from email import contentmanager
+from django.shortcuts import get_object_or_404
 import json
+from typing_extensions import Self
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 from .models import Message
@@ -9,7 +11,7 @@ class ChatConsumer(WebsocketConsumer):
     def fetch_messages(self, data):
         messages = Message().last_10_messages()
         content = {
-            'command': 'messages',
+            'command': 'fetch_messages',
             'messages': self.messages_to_json(messages),
         }
 
@@ -48,11 +50,28 @@ class ChatConsumer(WebsocketConsumer):
         }
 
         return self.send_chat_message(content)
+    
+    def delete_message(self, data):
+        try:
+            message = Message.objects.get(pk = data['message_id'])
+            message_id = message.id
+            if self.user == message.author:
+                message.delete()
+                content = {
+                    'command': "delete_message",
+                    'message_id': message_id,
+                }
+                
+                self.send_chat_message(content)
+        except Message.DoesNotExist:
+            print('message already deleted')
+
         
     
     command = {
         'fetch_messages': fetch_messages,
         'new_messages': new_messages,
+        'delete_message': delete_message,
     }
 
     def connect(self):

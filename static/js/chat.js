@@ -5,7 +5,7 @@ function HandleNewMessage(currentUser, message){
   const message_card = constructMessage(currentUser, message)
 
   $('.comment-card-container').before(message_card);
-  addReplyEventListener()
+  addReplyAndDelEventListener()
 }
 
 function HandlePreviousMessages(currentUser, messages){
@@ -26,3 +26,23 @@ function HandlePreviousMessages(currentUser, messages){
 
   this.addChat()
 }
+
+function  HandleDeleteMessage(message_id) {
+  // alert('message deleted ' + message_id)
+  $('.container-' + message_id).remove()
+}
+
+// add eventlistener to the reply form and delete buttons 
+const addReplyAndDelEventListener = ()=> {
+  $('.reply-form').on('submit', (e)=>{
+      e.preventDefault()
+      submitReply(e)
+    })
+  $('.delete-btn').click((e)=>{
+    e.preventDefault();
+    deleteMessage(e.target);
+  })
+  console.log('added event listener');
+}
+
+addReplyAndDelEventListener()

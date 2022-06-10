@@ -172,13 +172,14 @@
       const data = JSON.parse(e.data);
 
       if (data.command === 'new_message') {
-        console.log(data.message);
         HandleNewMessage(currentUser, data.message)
-      } else {
-        console.log(currentUser, data.messages)
+        document.querySelector('#comment-input').focus();
+      } else if (data.command == 'fetch_messages') {
         HandlePreviousMessages(currentUser, data.messages)
+        document.querySelector('#comment-input').focus();
+      }else if (data.command == 'delete_message'){
+        HandleDeleteMessage(data.message_id)
       }
-      document.querySelector('#comment-input').focus();
     };
 
     chatSocket.onclose = function (e) {
@@ -215,21 +216,18 @@
       $('form').find('button.btn-close').click()
     }
 
+    function deleteMessage(target) {
+      let message_id = target.id
+      chatSocket.send(JSON.stringify({
+        command: 'delete_message',
+        message_id: message_id,
+      }))
+    }
+
     function fetchMessages() {
       chatSocket.send(JSON.stringify({ 'command': 'fetch_messages' }))
     }
-  
-  const addReplyEventListener = ()=> {
-    document.querySelectorAll('.reply-form').forEach((element)=>{
-      element.addEventListener('submit', (e)=>{
-        e.preventDefault()
-        submitReply(e)
-      })
-    })
-    console.log('added event listener');
-  }
 
-  addReplyEventListener()
   </script>
 
 
