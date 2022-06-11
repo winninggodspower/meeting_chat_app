@@ -143,7 +143,7 @@
           <div class="photo-div"> <img class="rounded-circle" src="{{ user.userprofile.user_img.url }}" width="35px"
               alt="profile image" style="aspect-ratio: 1/1;"></div>
           <div class="textarea-div"><textarea name="comment" id="comment-input" class="form-control"
-              placeholder="Add a comment.."></textarea></div>
+              placeholder="Add a comment.." required></textarea></div>
           <div class="submitbtn-div"><input type="submit" class="submit-btn btn btn-sm text-white" value="SEND"></div>
         </form>
       </div>
@@ -179,6 +179,9 @@
         document.querySelector('#comment-input').focus();
       }else if (data.command == 'delete_message'){
         HandleDeleteMessage(data.message_id)
+      }else if (data.command == 'add_vote'){
+        console.log('it reached here');
+        HandleVoteMessage(data)
       }
     };
 
@@ -222,6 +225,18 @@
         command: 'delete_message',
         message_id: message_id,
       }))
+    }
+
+    function addVote(target) {
+      vote_type = target.id
+      message_id = target.getAttribute('data-message-id');
+
+      chatSocket.send(JSON.stringify({
+        command: 'add_vote',
+        vote_type: vote_type,
+        message_id: message_id,
+      }))
+
     }
 
     function fetchMessages() {

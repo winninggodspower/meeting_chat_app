@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from pyparsing import empty
 
 # Create your models here.
 class Message(models.Model):
@@ -8,6 +9,7 @@ class Message(models.Model):
     to = models.CharField(max_length = 30, default=None, null=True)
     content = models.TextField()
     votes = models.IntegerField(default=0)
+    votes_by = models.TextField(default='')
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

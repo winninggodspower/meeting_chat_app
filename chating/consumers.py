@@ -40,7 +40,8 @@ class ChatConsumer(WebsocketConsumer):
             to = data['to']
         else:
             to = None
-            
+        if not content.strip():
+            return 
         message = Message.objects.create(author = author, content = content, reply = reply, to = to)
         message.save()
 
@@ -66,12 +67,41 @@ class ChatConsumer(WebsocketConsumer):
         except Message.DoesNotExist:
             print('message already deleted')
 
+    def voting(self,data):
+        message = Message.objects.get(pk = data['message_id'])
+        voters_list = message.votes_by.split(',')
+        #checking if user has already voted
+        if self.user.username in voters_list:
+            self.send_message({
+                'command': 'add_vote',
+                'status': 'fail',
+            })
+            return
+        else:
+            voters_list.append(self.user.username)
+            message.votes_by = ','.join(voters_list)
+
+        message.votes  = message.votes + self.vote_type[data['vote_type']]
+        message.save()
+        self.send_chat_message({
+            'command': 'add_vote',
+            'status': 'successful',
+            'vote_type': data['vote_type'],
+            'vote_count': message.votes,
+            'message_id': message.id,
+        })
+
         
+    vote_type = {
+        'upvote': 1,
+        'downvote': -1,
+    }    
     
     command = {
         'fetch_messages': fetch_messages,
         'new_messages': new_messages,
         'delete_message': delete_message,
+        'add_vote': voting,
     }
 
     def connect(self):

@@ -11,11 +11,11 @@ function constructMessage(currentUser, message){
           class="votes-container col-12 col-sm-2 order-1 order-sm-0 mt-2 mt-sm-0 d-flex justify-content-center align-items-start">
           <div class="votes d-flex flex-sm-column justify-content-between p-2 p-sm-3 my-2 rounded rounded-3"
             style="background-color: hsl(223, 19%, 93%);">
-            <span class="upvote me-4 mx-sm-0"><svg class="bi" width="11" height="11">
+            <span id="upvote" data-message-id="${message.message_id}" class="upvote me-4 mx-sm-0"><svg class="bi" width="11" height="11">
                 <use xlink:href='#plus'></use>
               </svg></span>
             <span class="vote me-4 mx-sm-0">${message.votes}</span>
-            <span class="downvote me-0 mx-sm-0"><svg class="bi" width="11" height="3">
+            <span id="downvote" data-message-id="${message.message_id}" class="downvote me-0 mx-sm-0"><svg class="bi" width="11" height="3">
                 <use xlink:href='#minus'></use>
               </svg></span>
           </div>
@@ -113,11 +113,11 @@ function constructMessage(currentUser, message){
             class="votes-container col-12 col-sm-2 order-1 order-sm-0 mt-2 mt-sm-0 d-flex justify-content-center align-items-start">
             <div class="votes d-flex flex-sm-column justify-content-between p-2 p-sm-3 my-2 rounded rounded-3 "
               style="background-color: hsl(223, 19%, 93%);">
-              <span class="upvote me-4 mx-sm-0"><svg class="bi" width="11" height="11">
+              <span id="upvote" data-message-id="${message.message_id}" class="upvote me-4 mx-sm-0"><svg class="bi" width="11" height="11">
                   <use xlink:href='#plus'></use>
                 </svg></span>
-              <span class="vote me-4 mx-sm-0">5</span>
-              <span class="downvote me-0 mx-sm-0"><svg class="bi" width="11" height="3">
+              <span class="vote me-4 mx-sm-0">${message.votes}</span>
+              <span id="downvote" data-message-id="${message.message_id}" class="downvote me-0 mx-sm-0"><svg class="bi" width="11" height="3">
                   <use xlink:href='#minus'></use>
                 </svg></span>
             </div>
