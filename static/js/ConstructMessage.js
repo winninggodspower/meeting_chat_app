@@ -178,7 +178,7 @@ function constructMessage(currentUser, message){
                   <textarea name="" id="" class="form-control" required></textarea>
                 </div>
                 <div class="modal-footer border-0 pt-0 justify-content-between">
-                  <input type="submit" onsubmit="submitReply(e);" value="REPLY" class="reply-btn btn submit-btn text-white">
+                  <input type="submit" onsubmit="submitReply(e);" value="REPLY" class="reply-btn btn submit-btn text-white" >
                 </div>
               </form>
             </div>

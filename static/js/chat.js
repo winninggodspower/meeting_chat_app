@@ -28,7 +28,6 @@ function HandlePreviousMessages(currentUser, messages){
 }
 
 function  HandleDeleteMessage(message_id) {
-  // alert('message deleted ' + message_id)
   $('.container-' + message_id).remove()
 }
 
@@ -46,12 +45,22 @@ function HandleVoteMessage(data) {
   }
 }
 
+function removeReplyModal(message_id) {
+  console.log(document.getElementById(`reply-modal-${message_id}`))
+  var replyModal = new bootstrap.Modal(document.getElementById(`reply-modal-${message_id}`), {
+    keyboard: false
+   })
+  replyModal.hide() //closing the modal
+}
+
 // add eventlistener to the reply form and delete buttons 
 const addReplyAndDelEventListener = ()=> {
   // event listener for reply form
   $('.reply-form').on('submit', (e)=>{
       e.preventDefault()
       submitReply(e)
+      console.log(e.target.children.message_id.value);
+      removeReplyModal(e.target.children.message_id.value)
     })
   
   // event listener for delete button

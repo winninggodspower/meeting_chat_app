@@ -207,7 +207,7 @@
 
     function submitReply(e) {
         let form = e.target
-        to = $(form).serializeArray()[1].value
+        to = $(form).serializeArray()[1].value //getting the author of the chat from a hidden input field
         e.preventDefault()
         chatSocket.send(JSON.stringify({
         message: $(form).find('textarea').val(),
@@ -242,7 +242,6 @@
     function fetchMessages() {
       chatSocket.send(JSON.stringify({ 'command': 'fetch_messages' }))
     }
-
   </script>
 
 
@@ -287,10 +286,5 @@
         fill="currentColor">
     </symbol>
   </svg>
-  <!-- Pull dynamic content from the data.json file -->
-  <!--   
-<div class="attribution">
-  Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
-  Coded by <a href="#">Your Name Here</a>.
-</div> -->
+
   {% endblock %}
