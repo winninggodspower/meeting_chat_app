@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block head %}
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css">
+    <title>Frontend Mentor | Interactive comments section | Join Room</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+{% endblock %}
+{% block body %}
+    <div class="container px-0 px-initial">
+        <div class="container-inner rounded-top rounded-bottom border overflow-hidden my-0 my-sm-4 mx-0 mx-sm-4">
+            <form action="{% url 'join_channel' %}" method="post" class="m-0 p-0">
+                {% csrf_token %}
+                <div class="header p-4 bg-main-color ">
+                    <h1 class="text-light"> <i class="bi bi-pen"></i> Join/Create A Room</h1>
+                    <p class="w-50 text-light fs-5">join an existing Room by putting in the Room name or just create a new one.</p>
+                </div>
+                <div class="p-4">
+                    <label for="room_name" class="form-label fs-5"> Join/Create A Room</label>
+                    <input type="text" class="form-control form-control-lg" id="room_name" name="room_name" required>
+                </div>
+                <div class="mb-3 p-4 pt-0">
+                    <input type="submit" class="btn btn-lg bg-main-color text-white" value="sumbit">
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
