@@ -5,6 +5,7 @@
 <script src="{% static 'js/reconnecting-websocket.js' %}"></script>
 <script src="{% static 'js/ConstructMessage.js' %}"></script>
 <script src="{% static 'js/chat.js' %}"></script>
+<script src="{% static 'js/newUser.js' %}"></script>
 <title>Chat</title>
 {% endblock %}
 
@@ -19,42 +20,16 @@
       <span class="fs-4">Active Users</span>
     </a>
     <hr>
-    <ul class="nav nav-pills flex-column mb-auto">
-      <li class="nav-item nav-link link-dark">
+    <ul id="user-list" class="nav nav-pills flex-column mb-auto">
+      {% for user in active_users %}
+      <li class="nav-item nav-link link-dark users">
         <div class="position-relative d-inline">
           <span class="active-icon position-absolute translate-middle p-1 border rounded-circle"></span>
-          <img class="bi me-2" src="./images/avatars/image-amyrobson.png" width="30" height="30" alt="">
+          <img class="bi me-2 rounded-circle" src="{{user.userprofile.user_img.url}}" width="30" height="30" alt="">
         </div>
-        amyrobson
-        </a>
+        {{user.username}}
       </li>
-      <li>
-        <a href="#" class="nav-link link-dark">
-          <div class="position-relative d-inline">
-            <span class="active-icon position-absolute translate-middle p-1 border rounded-circle"></span>
-            <img class="bi me-2" src="./images/avatars/image-juliusomo.png" width="30" height="30" alt="">
-          </div>
-          juliusoma
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nav-link link-dark">
-          <div class="position-relative d-inline">
-            <span class="active-icon position-absolute translate-middle p-1 border rounded-circle"></span>
-            <img class="bi me-2" src="./images/avatars/image-maxblagun.png" width="30" height="30" alt="">
-          </div>
-          maxblagun
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nav-link link-dark">
-          <div class="position-relative d-inline">
-            <span class="active-icon position-absolute translate-middle p-1 border rounded-circle"></span>
-            <img class="bi me-2" src="./images/avatars/image-ramsesmiron.png" width="30" height="30" alt="">
-          </div>
-          ramssesmiron
-        </a>
-      </li>
+      {% endfor %}
     </ul>
     <hr>
     <div class="dropup">
@@ -152,7 +127,7 @@
 
   <script>
     const currentUser = '{{user.username}}'
-    const roomName = 'chat';
+    const roomName = '{{room_name}}';
     // connecting to the sucket
     const chatSocket = new ReconnectingWebSocket(
       'ws://'
@@ -182,6 +157,9 @@
       }else if (data.command == 'add_vote'){
         console.log('it reached here');
         HandleVoteMessage(data)
+      }else if (data.command == 'new_user'){
+        console.log('new user added');
+        HandleNewUser(data.message)
       }
     };
 
@@ -192,6 +170,7 @@
     // focus on the comment button on load
     document.querySelector('#comment-input').focus();
 
+    // setting the event listener when the user clicks on the submit button to submit a chat
     $('form#comment-form').on('submit', (e)=>{
       e.preventDefault()
       const messageInputDom = document.querySelector('#comment-input');

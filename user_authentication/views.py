@@ -55,7 +55,7 @@ def login_user(request):
     # redirect user to chat if already logged in
     if request.user.is_authenticated:
         messages.info(request, 'You Are Already Logged In')
-        return redirect('/chat')
+        return redirect('/join_room')
 
     if request.method == 'POST':
         print('a post message sent')
@@ -72,7 +72,7 @@ def login_user(request):
                 login(request, user)
                 messages.success(request, 
                 f'successfully logged in as {user.username}')
-                return redirect('/chat')
+                return redirect('/join_room')
             else:
                 messages.error(request, 'user not found')
                 # form.add_error('user not found')

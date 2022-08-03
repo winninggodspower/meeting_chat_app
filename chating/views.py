@@ -1,14 +1,20 @@
 from urllib import request
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,redirect ,get_object_or_404
 from django.contrib import messages
 from django.views import View
+
+from django.contrib.auth.models import User
+
 from .models import Message
 
-def index(request):
-    context = {'user': request.user}
+def index(request, room_name):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+    context = {'user': request.user, 'room_name': room_name,'active_users': User.objects.filter(is_active=True).all()}
     return render(request, 'index.html', context)
 
-class edit_message(View):
+class Edit_message(View):
     
     def get(self, request, message_id):
         
@@ -34,4 +40,14 @@ class edit_message(View):
 
         messages.success(request, "successfully edited post")
         return redirect('index')
+
+
+class Join_Channel(View):
+    # @login_required
+    def get(self, request):
+        return render(request, 'join_channel.html')
+
+    def post(self, request):
+        room_name = request.POST.get('room_name')
+        return redirect('chat', room_name = room_name)
 
