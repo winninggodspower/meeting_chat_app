@@ -70,6 +70,15 @@ class ChatConsumer(WebsocketConsumer):
             'message': list(user_obj)
         }
         self.send_message(data)
+
+    def remove_user(self, user):
+        data = {
+            'command': 'remove_user',
+            'message': {
+                'username': user.username,
+            }
+        }
+        self.send_chat_message(data)
     
     def delete_message(self, data):
         try:
@@ -151,6 +160,7 @@ class ChatConsumer(WebsocketConsumer):
         )
 
         if self.user.is_authenticated:
+            self.remove_user(self.user)
             Room.remove_user(self.user, self.room_name)
 
     # Receive message from WebSocket

@@ -163,6 +163,9 @@
       }else if (data.command == 'all_users'){
         console.log('gotten all users');
         HandleAllUser(data.message)
+      }else if (data.command == 'remove_user'){
+        console.log('A user has been disconnected');
+        RemoveUser(data.message)
       }
     };
 
