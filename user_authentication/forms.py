@@ -1,3 +1,4 @@
+import re
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.models import User
@@ -7,6 +8,10 @@ from django.core import validators
 # import the model here to populate the form
 from .models import UserProfile
 
+
+def username_not_link(username):
+    if re.match('[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)', username):
+        raise forms.ValidationError('cannot set username as a url')
 
 def validate_email(email):
     if not User.objects.filter(email = email).first():
@@ -23,7 +28,7 @@ class LoginForm(forms.Form):
     remember_me.widget.attrs.update({'class' : 'form-check-input','checked': 'True'})
 
 class RegisterForm(UserCreationForm):
-    username = forms.CharField(required=True, max_length=30, widget = forms.TextInput(attrs={'class':'form-control form-control-lg'}))
+    username = forms.CharField(required=True, max_length=30, widget = forms.TextInput(attrs={'class':'form-control form-control-lg'}), validators=[username_not_link])
     email = forms.EmailField(required=True, max_length=30,widget = forms.EmailInput(attrs={'class' : 'form-control form-control-lg'}))
     password1 = forms.CharField(required=True, widget = forms.PasswordInput(attrs={'class' : 'form-control form-control-lg'}))
     password2 = forms.CharField(required=True, widget = forms.PasswordInput(attrs={'class' : 'form-control form-control-lg'}))

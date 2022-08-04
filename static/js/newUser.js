@@ -4,7 +4,6 @@
 // ```
 function HandleNewUser(data) {
     const user_exist = Boolean(document.querySelector(`.${data.username}`))
-    alert(user_exist,)
 
 
     if (!user_exist) {
