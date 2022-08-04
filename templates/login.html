@@ -16,8 +16,8 @@
             {% csrf_token %}
           <!-- Email input -->
           <div class="form-outline mb-4">
-            <div class="mb-0">
-              {{ form.email.errors }}  
+            <div class="mb-0 is_invalid flex text-start">
+              {{ form.email.errors }}
             </div>
             {{ form.email }}
               <label for="id_{{ form.email.name }}" class="form-label" style="margin-left: 0px;">{{form.email.name.capitalize}}</label>

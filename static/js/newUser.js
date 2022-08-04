@@ -3,14 +3,10 @@
 // The function HandleNewUser adds the new user to the active user section of the ui/page
 // ```
 function HandleNewUser(data) {
-    const users = $('.users').text().split('\n').filter((lt)=>{
-        return lt.trim() != ''
-    } ).map((lt)=>{
-        return lt.trim()
-    })
+    // getting the boolean for if the user already exist or not
+    const user_exist = Boolean(document.querySelector(`.${data.username}`))
 
-
-    if (!users.includes(data.username) ) {
+    if (!user_exist) {
         $('#user-list').append(`
         <li class="${data.username} nav-item nav-link link-dark users">
             <div class="position-relative d-inline">
