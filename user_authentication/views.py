@@ -38,7 +38,7 @@ def register(request):
 
             login(request, user)
             messages.success(request, 'Succesfully created account')
-            return redirect('/chat')
+            return redirect('/join_room')
         else:
 
             # rendering the template again if the form is not valid with the prepopulated data.
@@ -93,4 +93,4 @@ def logout_user(request):
     if request.user.is_authenticated:
         logout(request)
         messages.info(request, 'successfully logged out')
-        return redirect('/chat')
+        return redirect('/login')

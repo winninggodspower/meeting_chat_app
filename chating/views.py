@@ -8,11 +8,18 @@ from django.contrib.auth.models import User
 
 from .models import Message, Room
 
+@login_required
 def index(request, room_name):
-    room_users = Room.objects.filter(room_name = room_name).first().users.all()
     if not request.user.is_authenticated:
         return redirect('/login')
-    context = {'user': request.user, 'room_name': room_name, 'room_users': room_users}
+    room_name = room_name.strip()
+    if ' ' in room_name:
+        messages.error(request, 'your room name must not contain white space')
+        return redirect('/join_room')
+
+    # room_users = Room.objects.filter(room_name = room_name).first().users.all() # getting the users in the room
+    
+    context = {'user': request.user, 'room_name': room_name}
     return render(request, 'index.html', context)
 
 class Edit_message(View):
@@ -40,7 +47,7 @@ class Edit_message(View):
         message.save()
 
         messages.success(request, "successfully edited post")
-        return redirect('index')
+        return redirect(f'/chat/{message.room}')
 
 
 class Join_Channel(View):

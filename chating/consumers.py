@@ -9,7 +9,7 @@ from .models import Message, Room
 class ChatConsumer(WebsocketConsumer):
     def fetch_messages(self, data):
         messages = Message.last_10_messages(self.room_name)
-        print(messages)
+        print(f'These are the last ten messages {messages}')
         content = {
             'command': 'fetch_messages',
             'messages': self.messages_to_json(messages),
@@ -51,6 +51,25 @@ class ChatConsumer(WebsocketConsumer):
         }
 
         return self.send_chat_message(content)
+
+    def send_user_update(self, user, command):
+        data = {
+            'command': command,
+            'message':{
+                'username': user.username,
+                'user_img_url': user.userprofile.user_img.url,
+            }
+        }
+        self.send_chat_message(data)
+
+    def send_room_users(self, room_name):
+        room_users = Room.objects.filter(room_name = room_name).first().users.all() # returns a list of room users
+        user_obj = map(lambda user: {'username': user.username, 'user_img_url': user.userprofile.user_img.url}, room_users)
+        data = {
+            'command': 'all_users',
+            'message': list(user_obj)
+        }
+        self.send_message(data)
     
     def delete_message(self, data):
         try:
@@ -109,11 +128,9 @@ class ChatConsumer(WebsocketConsumer):
         self.room_group_name = 'chat_%s' % self.room_name
         self.user = self.scope["user"] # getting the user
 
+        room, _ = Room.add(self.room_name, self.user) #adding the user to the room
 
-        if self.user.is_authenticated:
-            room, _ = Room.add(self.room_name, self.user)
-
-            self.room = room
+        self.room = room
 
         # Join room group
         async_to_sync(self.channel_layer.group_add)(
@@ -122,6 +139,9 @@ class ChatConsumer(WebsocketConsumer):
         )
 
         self.accept()
+
+        self.send_room_users(self.room_name)
+        self.send_user_update(self.user, 'new_user')
 
     def disconnect(self, close_code):
         # Leave room group

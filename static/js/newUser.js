@@ -1,7 +1,7 @@
 
-```
-The function HandleNewUser adds the new user to the active user section of the ui
-```
+// ```
+// The function HandleNewUser adds the new user to the active user section of the ui/page
+// ```
 function HandleNewUser(data) {
     const users = $('.users').text().split('\n').filter((lt)=>{
         return lt.trim() != ''
@@ -23,4 +23,11 @@ function HandleNewUser(data) {
     }
 
 
+}
+
+
+function HandleAllUser(data) {
+    data.forEach(user_data => {
+        HandleNewUser(user_data)
+    });
 }

@@ -159,7 +159,10 @@
         HandleVoteMessage(data)
       }else if (data.command == 'new_user'){
         console.log('new user added');
-        HandleNewUser(data.message)
+        HandleNewUser(data.message);
+      }else if (data.command == 'all_users'){
+        console.log('gotten all users');
+        HandleAllUser(data.message)
       }
     };
 
