@@ -4,11 +4,12 @@ import json
 from typing_extensions import Self
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
-from .models import Message
+from .models import Message, Room
 
 class ChatConsumer(WebsocketConsumer):
     def fetch_messages(self, data):
-        messages = Message().last_10_messages()
+        messages = Message.last_10_messages(self.room_name)
+        print(messages)
         content = {
             'command': 'fetch_messages',
             'messages': self.messages_to_json(messages),
@@ -34,14 +35,14 @@ class ChatConsumer(WebsocketConsumer):
         author = self.user 
         content = data['message']
         reply = True if data['reply'] == 'true' else False
-        # getting the 'to' keyword if it was a reply else setting the 'to' to None 
+        # getting the 'to' keyword if it was a reply else setting the 'to' to None
         if reply:
             to = data['to']
         else:
             to = None
         if not content.strip():
             return 
-        message = Message.objects.create(author = author, content = content, reply = reply, to = to)
+        message = Message.objects.create(author = author, content = content, reply = reply, to = to, room = self.room)
         message.save()
 
         content = {
@@ -106,8 +107,14 @@ class ChatConsumer(WebsocketConsumer):
     def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = 'chat_%s' % self.room_name
-
         self.user = self.scope["user"] # getting the user
+
+        # self.group_users = {self.scope.get('user').id: 1}
+
+        if self.user.is_authenticated:
+            room, _ = Room.add(self.room_name, self.user)
+
+        self.room = room
 
         # Join room group
         async_to_sync(self.channel_layer.group_add)(
@@ -123,6 +130,9 @@ class ChatConsumer(WebsocketConsumer):
             self.room_group_name,
             self.channel_name
         )
+
+        if self.user.is_authenticated:
+            Room.remove_user(self.user, self.room_name)
 
     # Receive message from WebSocket
     def receive(self, text_data):
