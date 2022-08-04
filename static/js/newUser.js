@@ -3,8 +3,9 @@
 // The function HandleNewUser adds the new user to the active user section of the ui/page
 // ```
 function HandleNewUser(data) {
-    // getting the boolean for if the user already exist or not
     const user_exist = Boolean(document.querySelector(`.${data.username}`))
+    alert(user_exist,)
+
 
     if (!user_exist) {
         $('#user-list').append(`
@@ -23,6 +24,7 @@ function HandleNewUser(data) {
 
 
 function HandleAllUser(data) {
+    console.log(data)
     data.forEach(user_data => {
         HandleNewUser(user_data)
     });
