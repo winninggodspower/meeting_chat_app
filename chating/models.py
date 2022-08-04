@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
-from asgiref.sync import sync_to_async
+# from asgiref.sync import sync_to_async
 
 # Create your models here.
 class Room(models.Model):
@@ -23,9 +23,9 @@ class Room(models.Model):
 
     @classmethod
     def remove_user(self, user, room_name):
-        room = self.objects.filter(room_name=room_name)
+        room = self.objects.filter(room_name=room_name).first()
         if room.exists():
-            Room.users.remove(user)
+            room.users.remove(user)
             if self.user_count(room_name) <= 0:
                 self.objects.filter(room_name = room_name).first().delete()
 

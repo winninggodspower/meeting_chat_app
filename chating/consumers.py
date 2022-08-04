@@ -109,12 +109,11 @@ class ChatConsumer(WebsocketConsumer):
         self.room_group_name = 'chat_%s' % self.room_name
         self.user = self.scope["user"] # getting the user
 
-        # self.group_users = {self.scope.get('user').id: 1}
 
         if self.user.is_authenticated:
             room, _ = Room.add(self.room_name, self.user)
 
-        self.room = room
+            self.room = room
 
         # Join room group
         async_to_sync(self.channel_layer.group_add)(

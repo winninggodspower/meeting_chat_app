@@ -6,12 +6,13 @@ from django.views import View
 
 from django.contrib.auth.models import User
 
-from .models import Message
+from .models import Message, Room
 
 def index(request, room_name):
+    room_users = Room.objects.filter(room_name = room_name).first().users.all()
     if not request.user.is_authenticated:
         return redirect('/login')
-    context = {'user': request.user, 'room_name': room_name,'active_users': User.objects.filter(is_active=True).all()}
+    context = {'user': request.user, 'room_name': room_name, 'room_users': room_users}
     return render(request, 'index.html', context)
 
 class Edit_message(View):
