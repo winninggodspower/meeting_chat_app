@@ -55,8 +55,8 @@ class Message(models.Model):
     def last_10_messages(self, room_name):
         room = Room.objects.filter(room_name = room_name).first()
         if room:
-            return Message.objects.filter(room = room).order_by('-timestamp').all()[:11:-1]
+            return Message.objects.filter(room = room).order_by('-timestamp').all()[:11]
         else:
             print('room not found')
-            return []
+            return [] 
     
