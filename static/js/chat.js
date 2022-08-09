@@ -46,11 +46,10 @@ function HandleVoteMessage(data) {
 }
 
 function removeReplyModal(message_id) {
-  console.log(document.getElementById(`reply-modal-${message_id}`))
-  var replyModal = new bootstrap.Modal(document.getElementById(`reply-modal-${message_id}`), {
-    keyboard: false
-   })
-  replyModal.hide() //closing the modal
+  $(`reply-modal-${message.message_id}`).modal('hide');
+  $('body').removeClass('modal-open');
+  $('.modal-backdrop').remove();
+  console.log('removed modal');
 }
 
 // add eventlistener to the reply form and delete buttons 

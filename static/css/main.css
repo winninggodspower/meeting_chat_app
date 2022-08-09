@@ -18,7 +18,7 @@ html{
 }
 
 .you-icon, .submit-btn, .bg-main-color{
-    background-color: #5357B6;
+    background-color: #5357B6 !important;
 }
 
 .edit:hover, .reply:hover{
@@ -34,11 +34,11 @@ html{
 }
 
 .delete-btn{
-    background-color: hsl(358, 79%, 66%);
+    background-color: hsl(358, 79%, 66%) !important;
 }
 
 .delete-btn:focus{
-    box-shadow: 0 0 0 0.25rem hsl(357, 100%, 86%);
+    box-shadow: 0 0 0 0.25rem hsl(357, 100%, 86%) !important;
 }
 
 div, span{
