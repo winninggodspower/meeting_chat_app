@@ -3,3 +3,4 @@
 *.sqlite3
 __pychache__/
 MEDIA/
+static/css/bootstrap-5.1.3/
