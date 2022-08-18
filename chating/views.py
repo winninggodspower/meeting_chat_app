@@ -1,12 +1,17 @@
 from urllib import request
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,redirect ,get_object_or_404
+from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views import View
 
 from django.contrib.auth.models import User
 
 from .models import Message, Room
+
+
+def home(request):
+    return redirect('/join_room')
 
 @login_required
 def index(request, room_name):
@@ -59,3 +64,10 @@ class Join_Channel(View):
         room_name = request.POST.get('room_name')
         return redirect('chat', room_name = room_name)
 
+def check_room_exist(request):
+    if request.method == 'POST':
+        room_name = request.POST.get('room_name') #getting room_name from request
+        room_name = Room.objects.filter(room_name  = room_name).first()
+        return HttpResponse('Join room') if room_name else HttpResponse('Create room')
+
+    return

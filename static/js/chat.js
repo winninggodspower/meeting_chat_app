@@ -1,18 +1,24 @@
-// import constructMessage from './ConstructMessage.js'
-
+// FUNCTION THAT HANDLES INCOMING MESSAGE FROM WEBSOCKET AND DISPLAY IT IN THE UI
 function HandleNewMessage(currentUser, message){
-  
+  // GETTINNG THE HTML CONTENT TO ADD TO THE UI/PAGE
+  // BY PASSING IN THE CURRENT USER AND MESSAGE USED IN COMPOSING THE MESSAGE
   const message_card = constructMessage(currentUser, message)
 
+  // ADDING THE HTML CONTENT OF THE MESSAGE TO THE PAGE
   $('.comment-card-container').before(message_card);
   addReplyAndDelEventListener()
 }
 
+// Function runs when user just enters the chat room
+// It takes and array of messages  
+// and contruct the message html content for each content
 function HandlePreviousMessages(currentUser, messages){
   this.currentUser = currentUser;
   this.currentMessageNum = 0;
   this.messages = messages
 
+  // addChat function that construnc the message
+  // with a lttle settimeout function that creates a little time delay animation
   this.addChat = ()=>{
     if (this.currentMessageNum <= this.messages.length) {
       HandleNewMessage(this.currentUser, this.messages[this.currentMessageNum])

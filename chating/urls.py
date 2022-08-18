@@ -6,4 +6,6 @@ urlpatterns = [
     path('chat/<room_name>/', views.index, name='chat'),
     path('edit_message/<int:message_id>', views.Edit_message.as_view(), name='edit_message'),
     path('join_room', views.Join_Channel.as_view(), name='join_channel'),
+    path('', views.home, name='home'),
+    path('check_room_exist', views.check_room_exist, name='check_room_exist'),
 ]
