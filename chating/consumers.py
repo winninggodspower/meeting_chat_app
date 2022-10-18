@@ -127,7 +127,7 @@ class ChatConsumer(WebsocketConsumer):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = 'chat_%s' % self.room_name
         self.user = self.scope["user"] # getting the user
-
+        print("connecting to room...")
         room, _ = Room.add(self.room_name, self.user) #adding the user to the room
 
         self.room = room
